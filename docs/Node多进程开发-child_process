@@ -1,0 +1,4 @@
+- exec
+- execFile
+- spawn
+- fork：node方式实现

@@ -1,0 +1,4 @@
+- CLI_LOG_LEVEL：日志级别， verbose/info
+- CLI_HOME: 用户主目录
+- CLI_HOME_PATH: 缓存目录
+- CLI_TARGET_PATH: 调试文件路径
