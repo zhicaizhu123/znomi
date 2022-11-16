@@ -149,13 +149,6 @@ function registerCommand() {
         .option('-d, --debug', '是否开启调试模式', false)
         .option('-tp, --targetPath <targetPath>', '是否使用调试文件路径')
 
-    // 初始化项目命令
-    program
-        .command('init <projectName>')
-        .description('初始化项目')
-        .option('-f, --force', '是否强制初始化项目')
-        .action(exec)
-    
     // 如果开启debug，则可以打印调试的日志
     program.on('option:debug', () => {
         const isDebug = program.getOptionValue('debug')
@@ -178,6 +171,14 @@ function registerCommand() {
         }
     })
 
+    // 初始化项目命令
+    program
+        .command('init <projectName>')
+        .description('初始化项目')
+        .option('-f, --force', '是否强制初始化项目')
+        .action(exec)
+    
+    
     program.parse(process.argv)
 
     // 如果没有输入任何命令打印帮助文档

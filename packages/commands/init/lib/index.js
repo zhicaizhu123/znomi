@@ -16,6 +16,8 @@ class InitCommand extends Command {
     init() {
         this.projectName = this._argv[0] || ''
         this.force = !!this._options.force
+        // 子进程执行，需要重新设置日志级别
+        log.level = process.env.CLI_LOG_LEVEL || 'info'
         log.verbose('projectName', this.projectName)
         log.verbose('force', this.force)
     }
