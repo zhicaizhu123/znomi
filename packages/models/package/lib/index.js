@@ -115,7 +115,6 @@ class Package {
     getRootFilePath() {
         function getPath(targetPath) {
             // 1. 获取package.json所在目录  pkg-dir
-            console.log(targetPath)
             const pkgDirPath = pkgDirSync(targetPath)
             if (!pkgDirPath) {
                 return null

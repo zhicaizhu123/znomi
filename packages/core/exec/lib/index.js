@@ -19,12 +19,11 @@ async function exec() {
     // 安装包缓存目录
     let storeDir = ''
 
-    
     const cmdObj = arguments[arguments.length - 1]
     // 命令名称
     const cmdName = cmdObj.name()
     const packageName = SETTINGS[cmdName]
-    const packageVersion = '1.1.0'
+    const packageVersion = 'latest'
     
     let pkg
     if (!targetPath) {

@@ -35,7 +35,6 @@ class Command {
         const lowestVersion = LOWEST_VERSION
         // 获取当前Node版本
         const currentVersion = process.version
-        log.info('Node version', currentVersion)
         if (!semver.gte(currentVersion, lowestVersion)) {
             throw new Error(colors.red(`znomi-cli 需要安装 v${lowestVersion} 版本以上的Node.js`))
         }
@@ -43,7 +42,8 @@ class Command {
 
     initArgs() {
         this._cmd = this._argv[this._argv.length - 1]
-        this._argv = this._argv.slice(0, this._argv.length - 1)
+        this._options = this._argv[this._argv.length - 2]
+        this._argv = this._argv.slice(0, this._argv.length - 2)
     }
 
 

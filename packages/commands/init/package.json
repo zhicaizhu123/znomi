@@ -21,6 +21,9 @@
   },
   "dependencies": {
     "@znomi/command": "*",
-    "@znomi/log": "*"
+    "@znomi/log": "*",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.2.5",
+    "semver": "^7.3.8"
   }
 }
