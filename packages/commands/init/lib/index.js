@@ -3,7 +3,7 @@
 const { readdirSync } = require('fs')
 const { resolve } = require('path')
 const semver = require('semver')
-const { emptyDirSync } = require('fs-extra')
+const { emptyDirSync, ensureDirSync, copySync } = require('fs-extra')
 const inquirer = require('inquirer')
 const log = require('@znomi/log')
 const Command = require('@znomi/command')
@@ -42,6 +42,7 @@ class InitCommand extends Command {
             // 2. 下载模板
             await this.downloadTemplate()
             // 3. 获取项目的基本信息
+            await this.generateTemplate()
         } catch(err) {
             log.error(err.message)
         }
@@ -88,16 +89,17 @@ class InitCommand extends Command {
                     }
                 }
             }
-            return this.getProjectInfo()
+            const type = await this.getType()
+            return this.getProjectInfo(type)
         } catch(err) {
             log.error(err.message)
         }
     }
 
     /**
-     * 获取将要创建的项目的信息
+     * 获取模板类型
      */
-    async getProjectInfo() {
+    async getType() {
         const { type } = await inquirer.prompt([
             {
                 type: 'list',
@@ -116,47 +118,66 @@ class InitCommand extends Command {
                 ]
             }
         ])
-        if (type === TYPE_PROJECT) {
-            // 项目类型
-            const { projectName, projectVersion } = await inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'projectName',
-                    message: '请输入项目名称',
-                    validate: function (value) {
-                        const done = this.async();
-                        setTimeout(() => {
-                            if (!/^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9]*)$/.test(value)) {
-                                done('请输入合法的项目名册，例如：a-b、a_b、abc等')
-                                return
-                            }
-                            done(null, true)
-                        }, 0)
-                    },
-                    filter: (value) => value,
-                },
-                {
-                    type: 'input',
-                    name: 'projectVersion',
-                    message: '请输入项目版本号',
-                    validate: function (value) {
-                        const done = this.async();
-                        setTimeout(() => {
-                            if (!semver.valid(value)) {
-                                done('请输入合法的版本号，例如：1.0.0')
-                                return
-                            }
-                            done(null, true)
-                        }, 0)
-                    },
-                    filter: (value) => semver.valid(value) ? semver.valid(value) : value,
-                }
-            ])
-            return { type, projectName, projectVersion }
-        } else if (type === TYPE_COMPONENT) {
-            // TODO: 组件类型
-            return { type }
+        return type
+    }
+
+    /**
+     * 获取模板类型对应名称
+     * @param {*} type type 模板类型
+     * @returns 
+     */
+    getTypeName(type) {
+        switch(type) {
+            case TYPE_PROJECT:
+                return '项目'
+            case TYPE_COMPONENT:
+                return '组件'
         }
+    }
+
+    /**
+     * 获取将要创建的项目的信息
+     * @param {*} type 模板类型
+     * @returns 
+     */
+    async getProjectInfo(type) {
+        const typeName = this.getTypeName(type)
+        // 项目类型
+        const { projectName, projectVersion } = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'projectName',
+                message: `请输入${typeName}名称`,
+                validate: function (value) {
+                    const done = this.async();
+                    setTimeout(() => {
+                        if (!/^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9]*)$/.test(value)) {
+                            done(`请输入合法的${typeName}名称，例如：a-b、a_b、abc等`)
+                            return
+                        }
+                        done(null, true)
+                    }, 0)
+                },
+                filter: (value) => value,
+            },
+            {
+                type: 'input',
+                name: 'projectVersion',
+                message: `请输入${typeName}版本号`,
+                validate: function (value) {
+                    const done = this.async();
+                    setTimeout(() => {
+                        if (!semver.valid(value)) {
+                            done('请输入合法的版本号，例如：1.0.0')
+                            return
+                        }
+                        done(null, true)
+                    }, 0)
+                },
+                filter: (value) => semver.valid(value) ? semver.valid(value) : value,
+            }
+        ])
+        return { type, projectName, projectVersion }
     }
 
     /**
@@ -178,8 +199,10 @@ class InitCommand extends Command {
         this.templates = templates
     }
 
-    async downloadTemplate() {
-        // 1. 从后台的项目列表选取项目模板
+    /**
+     * 获取选中模板信息
+     */
+    async getTemplate() {
         const { npmName } = await inquirer.prompt([
             {
                 type: 'list',
@@ -188,9 +211,25 @@ class InitCommand extends Command {
                 choices: this.getTemplateChoices()
             },
         ])
-        
-        const currentTemplate = this.templates.find(item => item.npmName === npmName)
-        // 2. 通过npm存储项目模板
+        this.currentTemplate = this.templates.find(item => item.npmName === npmName)
+        return this.currentTemplate
+    }
+
+    /**
+     * 获取模板选项列表
+     */
+     getTemplateChoices() {
+        return this.templates.map(item => ({
+            name: item.name,
+            value: item.npmName
+        }))
+    }
+
+    /**
+     * 下载模板
+     */
+    async downloadTemplate() {        
+        const currentTemplate = await this.getTemplate()
         const homePath = process.env.CLI_HOME_PATH
         const targetPath = resolve(homePath, 'templates')
         const storeDir = resolve(targetPath, 'node_modules')
@@ -198,27 +237,36 @@ class InitCommand extends Command {
             targetPath,
             storeDir,
             packageName: currentTemplate.npmName,
-            packageVersion: currentTemplate.version,
+            packageVersion: currentTemplate.npmVersion,
         })
         const isExists = await pkg.exists()
+        
         if (isExists) {
             // 更新package
             await pkg.update()
+            log.success('更新模板成功')
         } else {
             // 安装package
             await pkg.install()
-        }
-        // 3. 将项目模板存储到mongodb
-        // 4. 通过nest.js 获取mongodb中的数据并通过API返回
-
+            log.success('下载模板成功')
+        } 
+        this.pkg = pkg
     }
 
-    getTemplateChoices() {
-        return this.templates.map(item => ({
-            name: item.name,
-            value: item.npmName
-        }))
+    
+    /**
+     * 生成模板
+     */
+    generateTemplate() {
+        // 获取模板缓存路径
+        const templatePath = resolve(this.pkg.cacheFilePath, 'template')
+        console.log(templatePath)
+        const targetPath = process.cwd()
+        ensureDirSync(templatePath)
+        copySync(templatePath, targetPath)
+        log.success('创建成功')
     }
+    
 }
 
 function init(argv) {
