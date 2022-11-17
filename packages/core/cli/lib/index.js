@@ -33,7 +33,7 @@ async function core() {
         registerCommand()
     } catch(err) {
         log.error(err.message)
-        if (isDebug) {
+        if (isDebug()) {
             // 调试模式展示完成错误信息
             console.log(err)
         }
@@ -129,8 +129,7 @@ async function checkGlobalUpdate() {
     // 4. 获取最新版本号，提示用户更新到该版本
     const currentVersion = pkg.version
     const npmName = pkg.name
-    // TODO: 替换成npmName
-    const lastVersion = await getNpmSemverVersion(currentVersion, '@imooc-cli/core')
+    const lastVersion = await getNpmSemverVersion(currentVersion, npmName)
     if (lastVersion && semver.gt(lastVersion, currentVersion)) {
         log.warn('更新提示：', colors.yellow(`请手动更新 ${npmName}，当前版本：${currentVersion}， 最新版本：${lastVersion}， 更新命令：npm install -g ${npmName}`))
     }
