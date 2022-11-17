@@ -17,6 +17,7 @@ importers:
       '@znomi/log': '*'
       '@znomi/package': '*'
       '@znomi/request': '*'
+      '@znomi/spawn': '*'
       fs-extra: ^10.1.0
       inquirer: ^8.2.5
       path-exists: ^4.0.0
@@ -27,6 +28,7 @@ importers:
       '@znomi/log': link:../../utils/log
       '@znomi/package': link:../../models/package
       '@znomi/request': link:../../utils/request
+      '@znomi/spawn': link:../../utils/spawn
       fs-extra: registry.npmmirror.com/fs-extra/10.1.0
       inquirer: registry.npmmirror.com/inquirer/8.2.5
       path-exists: registry.npmmirror.com/path-exists/4.0.0
@@ -66,9 +68,11 @@ importers:
     specifiers:
       '@znomi/log': '*'
       '@znomi/package': '*'
+      '@znomi/spawn': '*'
     dependencies:
       '@znomi/log': link:../../utils/log
       '@znomi/package': link:../../models/package
+      '@znomi/spawn': link:../../utils/spawn
 
   packages/models/command:
     specifiers:
@@ -135,6 +139,9 @@ importers:
       axios: ^1.1.3
     dependencies:
       axios: registry.npmmirror.com/axios/1.1.3
+
+  packages/utils/spawn:
+    specifiers: {}
 
 packages:
 

@@ -1,14 +1,12 @@
 'use strict';
 
-const cp = require('child_process')
 const { resolve } = require('path')
 const log = require('@znomi/log')
-
+const spawn = require('@znomi/spawn')
 const Package = require('@znomi/package');
-const { stdout } = require('process');
 
 const SETTINGS = {
-    init: '@imooc-cli/init'
+    init: '@znomi/init'
 }
 
 async function exec() {
@@ -83,10 +81,10 @@ async function exec() {
                 log.error(err.message)
                 process.exit(1)
             })
-            child.on('exit', (e) => {
-                log.verbose('命令执行成功：' + e)
-                process.exit(e)
-            })
+            // child.on('exit', (e) => {
+            //     log.verbose('命令执行成功：' + e)
+            //     process.exit(e)
+            // })
         } catch(err) {
             log.error(err.message)
         }
@@ -94,12 +92,5 @@ async function exec() {
 }
 
 
-// 兼容不同系统
-function spawn(command, args, options) {
-    const win32 = process.platform === 'win32'
-    const cmd = win32 ? 'cmd' : command
-    const cmdArgs = win32 ? ['/c'].concat(command, args) : args
-    return cp.spawn(cmd, cmdArgs, options || {})
-}
 
 module.exports = exec;

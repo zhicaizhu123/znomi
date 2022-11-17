@@ -9,6 +9,8 @@ const log = require('@znomi/log')
 const Command = require('@znomi/command')
 const { get } = require('@znomi/request')
 const Package = require('@znomi/package')
+const spawn = require('@znomi/spawn')
+const loading = require('@znomi/loading')
 
 // 项目类型
 const TYPE_PROJECT = 1
@@ -46,8 +48,6 @@ class InitCommand extends Command {
         } catch(err) {
             log.error(err.message)
         }
-        
-        // 
     }
     
     /**
@@ -242,29 +242,76 @@ class InitCommand extends Command {
         const isExists = await pkg.exists()
         
         if (isExists) {
+            const spinner = loading('正在更新模板...')
             // 更新package
             await pkg.update()
+            spinner.stop(true)
             log.success('更新模板成功')
         } else {
+            const spinner = loading('正在下载模板...')
             // 安装package
             await pkg.install()
+            spinner.stop(true)
             log.success('下载模板成功')
         } 
         this.pkg = pkg
     }
 
-    
+    /**
+     * 格式化命令信息
+     * @param {*} script 基本命令
+     * @returns 
+     */
+    formatScript(script) {
+        const [command, ...args] = script.split(' ').filter(Boolean)
+        return { command, args }
+    }
+
+    /**
+     * 执行模板配置的命令
+     */
+    execCommand(command, args) {
+        return new Promise((resolve, reject) => {
+            // 安装脚本
+            const child = spawn(command, args, {
+                cwd: process.cwd(),
+                stdio: 'inherit'
+            })
+            child.on('error', (err) => {
+                reject(err)
+            })
+            child.on('exit', (e) => {
+                resolve(e)
+            })
+        })
+    }
+
     /**
      * 生成模板
      */
-    generateTemplate() {
+    async generateTemplate() {
         // 获取模板缓存路径
         const templatePath = resolve(this.pkg.cacheFilePath, 'template')
-        console.log(templatePath)
         const targetPath = process.cwd()
         ensureDirSync(templatePath)
         copySync(templatePath, targetPath)
-        log.success('创建成功')
+        log.success('创建模板成功')
+        if (this.currentTemplate.installScript) {
+            // 安装脚本
+            const { command, args } = this.formatScript(this.currentTemplate.installScript)
+            const err = await this.execCommand(command, args)
+            if (!err) {
+                log.success('安装依赖成功')
+            } 
+        }
+        if (this.currentTemplate.serveScript) {
+            // 运行项目
+            const { command, args } = this.formatScript(this.currentTemplate.serveScript)
+            const err = await this.execCommand(command, args)
+            if (!err) {
+                log.success('启动项目成功')
+            } 
+        }
     }
     
 }

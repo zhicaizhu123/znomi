@@ -1,9 +1,9 @@
 {
-  "name": "@znomi/exec",
+  "name": "@znomi/spawn",
   "version": "1.0.0",
   "description": "> TODO: description",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
-  "homepage": "",
+  "homepage": "https://github.com/zhicaizhu123/znomi#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
@@ -16,12 +16,14 @@
   "publishConfig": {
     "registry": "https://registry.npm.taobao.org/"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhicaizhu123/znomi.git"
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "dependencies": {
-    "@znomi/package": "*",
-    "@znomi/log": "*",
-    "@znomi/spawn": "*"
+  "bugs": {
+    "url": "https://github.com/zhicaizhu123/znomi/issues"
   }
 }

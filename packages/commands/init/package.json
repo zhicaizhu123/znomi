@@ -25,6 +25,7 @@
     "@znomi/package": "*",
     "@znomi/request": "*",
     "@znomi/loading": "*",
+    "@znomi/spawn": "*",
     "fs-extra": "^10.1.0",
     "inquirer": "^8.2.5",
     "path-exists": "^4.0.0",
