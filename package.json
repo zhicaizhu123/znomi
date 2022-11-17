@@ -17,7 +17,8 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^4.0.0",
-    "nx": "^15.0.13"
+    "nx": "^15.0.13",
+    "prettier": "^2.7.1"
   },
   "workspaces": [
     "packages/core/*",
