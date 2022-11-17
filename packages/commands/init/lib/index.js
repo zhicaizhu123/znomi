@@ -269,8 +269,11 @@ class InitCommand extends Command {
 
     /**
      * 执行模板配置的命令
+     * @param {*} command 命令
+     * @param {*} args 命令参数
+     * @returns 
      */
-    execCommand(command, args) {
+    execAsync(command, args) {
         return new Promise((resolve, reject) => {
             // 安装脚本
             const child = spawn(command, args, {
@@ -287,31 +290,39 @@ class InitCommand extends Command {
     }
 
     /**
+     * 执行命令
+     * @param {*} script 需要执行命令
+     * @param {*} successText 执行成功命令提示
+     * @returns 
+     */
+    async execCommand(script, successText) {
+        if (!script) return
+        // 安装脚本
+        const { command, args } = this.formatScript(script)
+        const err = await this.execAsync(command, args)
+        if (!err) {
+            log.success(successText)
+        } 
+    }
+    
+
+    /**
      * 生成模板
      */
     async generateTemplate() {
         // 获取模板缓存路径
         const templatePath = resolve(this.pkg.cacheFilePath, 'template')
+        // 获取当前目录路径
         const targetPath = process.cwd()
+        // 如果模板目录不存在则创建模板目录
         ensureDirSync(templatePath)
+        // 复制模板目录文件到当前目录
         copySync(templatePath, targetPath)
         log.success('创建模板成功')
-        if (this.currentTemplate.installScript) {
-            // 安装脚本
-            const { command, args } = this.formatScript(this.currentTemplate.installScript)
-            const err = await this.execCommand(command, args)
-            if (!err) {
-                log.success('安装依赖成功')
-            } 
-        }
-        if (this.currentTemplate.serveScript) {
-            // 运行项目
-            const { command, args } = this.formatScript(this.currentTemplate.serveScript)
-            const err = await this.execCommand(command, args)
-            if (!err) {
-                log.success('启动项目成功')
-            } 
-        }
+        // 安装脚本
+        await this.execCommand(this.currentTemplate.installScript, '安装依赖成功')
+        // 运行项目
+        await this.execCommand(this.currentTemplate.serveScript, '启动项目成功')
     }
     
 }
