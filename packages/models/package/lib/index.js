@@ -89,7 +89,10 @@ class Package {
     // 1. 判断最新版本号缓存路径是否存在
     const latestVersion = await getNpmLatestVersion(this.packageName);
     const latestFilePath = this.getCacheFilePathByVersion(latestVersion);
-    if (pathExists(latestFilePath)) return;
+    if (pathExists(latestFilePath)) {
+      this.packageVersion = latestVersion;
+      return;
+    }
     // 2. 如果不存在则安装最新版本号
     await npminstall({
       // 安装的根目录
