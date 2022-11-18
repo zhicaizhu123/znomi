@@ -1,6 +1,6 @@
 {
   "name": "@znomi/exec",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "> TODO: description",
   "author": "zzcnomi <zzcnomi@gmail.com>",
   "homepage": "",
@@ -27,8 +27,8 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/log": "^1.0.4",
-    "@znomi/package": "^1.0.4",
-    "@znomi/spawn": "^1.0.4"
+    "@znomi/log": "^1.0.5",
+    "@znomi/package": "^1.0.5",
+    "@znomi/spawn": "^1.0.5"
   }
 }
