@@ -1,6 +1,6 @@
 {
   "name": "@znomi/init",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "> TODO: description",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "",
@@ -27,12 +27,12 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/command": "^1.0.2",
-    "@znomi/loading": "^1.0.2",
-    "@znomi/log": "^1.0.2",
-    "@znomi/package": "^1.0.2",
-    "@znomi/request": "^1.0.2",
-    "@znomi/spawn": "^1.0.2",
+    "@znomi/command": "^1.0.3",
+    "@znomi/loading": "^1.0.3",
+    "@znomi/log": "^1.0.3",
+    "@znomi/package": "^1.0.3",
+    "@znomi/request": "^1.0.3",
+    "@znomi/spawn": "^1.0.3",
     "ejs": "^3.1.8",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",
