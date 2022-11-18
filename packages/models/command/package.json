@@ -27,7 +27,7 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/log": "^1.0.5",
+    "@znomi/log": "*",
     "colors": "^1.4.0",
     "semver": "^7.3.8"
   }

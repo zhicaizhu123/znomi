@@ -7,12 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "zhicaizhu123 <zhicaizhu123@126.com>",
+  "author": "",
   "license": "MIT",
   "devDependencies": {
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
     "prettier": "^2.7.1"
-  }
+  },
+  "workspaces": [
+    "packages/core/*",
+    "packages/commands/*",
+    "packages/models/*",
+    "packages/utils/*"
+  ]
 }
