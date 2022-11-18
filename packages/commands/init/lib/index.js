@@ -181,6 +181,7 @@ class InitCommand extends Command {
     ];
 
     if (!this.checkName(this.projectName)) {
+      const checkName = this.checkName;
       // 如果输入的项目名称不合法或者为空
       promptOptions.unshift({
         type: 'input',
@@ -189,7 +190,7 @@ class InitCommand extends Command {
         validate: function (value) {
           const done = this.async();
           setTimeout(() => {
-            if (!this.checkName(value)) {
+            if (!checkName(value)) {
               done(`请输入合法的${typeName}名称，例如：a-b、a_b、abc等`);
               return;
             }
