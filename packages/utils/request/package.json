@@ -2,7 +2,7 @@
   "name": "@znomi/request",
   "version": "1.0.4",
   "description": "> TODO: description",
-  "author": "zhicaizhu123 <zhicaizhu123@126.com>",
+  "author": "zzcnomi <zzcnomi@gmail.com>",
   "homepage": "https://github.com/zhicaizhu123/znomi#readme",
   "license": "MIT",
   "main": "lib/index.js",
