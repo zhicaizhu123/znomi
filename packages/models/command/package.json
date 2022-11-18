@@ -1,6 +1,6 @@
 {
   "name": "@znomi/command",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "> TODO: description",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "",
@@ -27,7 +27,7 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/log": "*",
+    "@znomi/log": "^1.0.1",
     "colors": "^1.4.0",
     "semver": "^7.3.8"
   }
