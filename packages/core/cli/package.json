@@ -30,10 +30,10 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/exec": "*",
-    "@znomi/get-npm-info": "*",
-    "@znomi/init": "*",
-    "@znomi/log": "*",
+    "@znomi/exec": "workspace:*",
+    "@znomi/get-npm-info": "workspace:*",
+    "@znomi/init": "workspace:*",
+    "@znomi/log": "workspace:*",
     "colors": "^1.4.0",
     "commander": "^9.4.1",
     "dotenv": "^16.0.3",

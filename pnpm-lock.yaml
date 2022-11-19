@@ -16,12 +16,12 @@ importers:
 
   packages/commands/init:
     specifiers:
-      '@znomi/command': '*'
-      '@znomi/loading': '*'
-      '@znomi/log': '*'
-      '@znomi/package': '*'
-      '@znomi/request': '*'
-      '@znomi/spawn': '*'
+      '@znomi/command': workspace:*
+      '@znomi/loading': workspace:*
+      '@znomi/log': workspace:*
+      '@znomi/package': workspace:*
+      '@znomi/request': workspace:*
+      '@znomi/spawn': workspace:*
       ejs: ^3.1.8
       fs-extra: ^10.1.0
       glob: ^8.0.3
@@ -46,10 +46,10 @@ importers:
 
   packages/core/cli:
     specifiers:
-      '@znomi/exec': '*'
-      '@znomi/get-npm-info': '*'
-      '@znomi/init': '*'
-      '@znomi/log': '*'
+      '@znomi/exec': workspace:*
+      '@znomi/get-npm-info': workspace:*
+      '@znomi/init': workspace:*
+      '@znomi/log': workspace:*
       colors: ^1.4.0
       commander: ^9.4.1
       dotenv: ^16.0.3
@@ -76,9 +76,9 @@ importers:
 
   packages/core/exec:
     specifiers:
-      '@znomi/log': '*'
-      '@znomi/package': '*'
-      '@znomi/spawn': '*'
+      '@znomi/log': workspace:*
+      '@znomi/package': workspace:*
+      '@znomi/spawn': workspace:*
     dependencies:
       '@znomi/log': link:../../utils/log
       '@znomi/package': link:../../models/package
@@ -86,7 +86,7 @@ importers:
 
   packages/models/command:
     specifiers:
-      '@znomi/log': '*'
+      '@znomi/log': workspace:*
       colors: ^1.4.0
       semver: ^7.3.8
     dependencies:
@@ -96,10 +96,10 @@ importers:
 
   packages/models/package:
     specifiers:
-      '@znomi/format-path': '*'
-      '@znomi/get-npm-info': '*'
-      '@znomi/helper': '*'
-      '@znomi/log': '*'
+      '@znomi/format-path': workspace:*
+      '@znomi/get-npm-info': workspace:*
+      '@znomi/helper': workspace:*
+      '@znomi/log': workspace:*
       fs-extra: ^10.1.0
       npminstall: ^6.6.1
       path-exists: ^4.0.0

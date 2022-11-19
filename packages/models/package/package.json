@@ -27,10 +27,10 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/format-path": "*",
-    "@znomi/get-npm-info": "*",
-    "@znomi/helper": "*",
-    "@znomi/log": "*",
+    "@znomi/format-path": "workspace:*",
+    "@znomi/get-npm-info": "workspace:*",
+    "@znomi/helper": "workspace:*",
+    "@znomi/log": "workspace:*",
     "fs-extra": "^10.1.0",
     "npminstall": "^6.6.1",
     "path-exists": "^4.0.0",

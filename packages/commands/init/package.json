@@ -27,12 +27,12 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/command": "*",
-    "@znomi/loading": "*",
-    "@znomi/log": "*",
-    "@znomi/package": "*",
-    "@znomi/request": "*",
-    "@znomi/spawn": "*",
+    "@znomi/command": "workspace:*",
+    "@znomi/loading": "workspace:*",
+    "@znomi/log": "workspace:*",
+    "@znomi/package": "workspace:*",
+    "@znomi/request": "workspace:*",
+    "@znomi/spawn": "workspace:*",
     "ejs": "^3.1.8",
     "fs-extra": "^10.1.0",
     "glob": "^8.0.3",

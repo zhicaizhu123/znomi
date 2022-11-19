@@ -27,8 +27,8 @@
     "url": "https://github.com/zhicaizhu123/znomi/issues"
   },
   "dependencies": {
-    "@znomi/log": "*",
-    "@znomi/package": "*",
-    "@znomi/spawn": "*"
+    "@znomi/log": "workspace:*",
+    "@znomi/package": "workspace:*",
+    "@znomi/spawn": "workspace:*"
   }
 }
