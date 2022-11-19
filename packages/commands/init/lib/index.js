@@ -417,8 +417,9 @@ class InitCommand extends Command {
     ensureDirSync(templatePath);
     // 复制模板目录文件到当前目录
     copySync(templatePath, targetPath);
+    const templateIgnore = this.currentTemplate.ejsIgnore || [];
     // 遍历更新模板文件信息
-    const ignore = ['node_modules/**', 'public/**', 'index.html'];
+    const ignore = ['**/node_modules/**', ...templateIgnore];
     await this.templateFilesRender(targetPath, ignore);
     log.success('创建模板成功');
     // 安装脚本
