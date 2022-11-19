@@ -225,8 +225,8 @@ class InitCommand extends Command {
    * @param {*} type 模板类型
    */
   async getTemplateList(type) {
-    const templates = await get('http://localhost:3000/api/templates/list', { type });
-    this.templates = templates;
+    const { data } = await get('http://localhost:3000/api/templates/list', { type });
+    this.templates = data;
   }
 
   /**
