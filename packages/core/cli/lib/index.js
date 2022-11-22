@@ -124,7 +124,7 @@ async function checkGlobalUpdate() {
   // 4. 获取最新版本号，提示用户更新到该版本
   const currentVersion = pkg.version;
   const npmName = pkg.name;
-  const lastVersion = await getNpmSemverVersion(currentVersion, '@imooc-cli/core');
+  const lastVersion = await getNpmSemverVersion(currentVersion, npmName);
   if (lastVersion && semver.gt(lastVersion, currentVersion)) {
     log.warn(
       '更新提示：',

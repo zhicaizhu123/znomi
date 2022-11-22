@@ -225,8 +225,12 @@ class InitCommand extends Command {
    * @param {*} type 模板类型
    */
   async getTemplateList(type) {
-    const { data } = await get('http://localhost:3000/api/templates/list', { type });
-    this.templates = data;
+    try {
+      const { data } = await get('http://localhost:3000/api/templates/list', { type });
+      this.templates = data;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
@@ -357,7 +361,7 @@ class InitCommand extends Command {
    */
   ejsRender(filePath, data = {}) {
     return new Promise((resolve, reject) => {
-      ejs.rejectTemplate(filePath, data, {}, (err, file) => {
+      ejs.renderFile(filePath, data, {}, (err, file) => {
         if (err) {
           reject(err);
         } else {
