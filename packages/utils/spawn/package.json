@@ -1,7 +1,7 @@
 {
   "name": "@znomi/spawn",
-  "version": "1.0.0",
-  "description": "> TODO: description",
+  "version": "1.0.1",
+  "description": "多进程命令工具",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "https://github.com/zhicaizhu123/znomi#readme",
   "license": "MIT",

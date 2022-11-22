@@ -1,7 +1,7 @@
 {
   "name": "@znomi/cli",
-  "version": "1.0.0",
-  "description": "> TODO: description",
+  "version": "1.0.1",
+  "description": "znomi脚手架",
   "author": "zhicaizhu123 <zhicaizhu123@126.com>",
   "homepage": "",
   "license": "MIT",
